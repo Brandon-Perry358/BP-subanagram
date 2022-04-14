@@ -35,7 +35,7 @@
   A sub-anagram means it is an anagram of a substring of word."
   [word, word-list]
   ;; Code goes here
-  (def subs (filter #(determineSubanagram word %)word-list)
+  (def findSubs (filter #(determineSubanagram word %)word-list)
   )
 )  
 
