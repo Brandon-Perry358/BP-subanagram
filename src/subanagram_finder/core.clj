@@ -9,10 +9,14 @@
 (require '[clojure.string :as str])
 
 (defn determineSubanagram [large small]
-  (def largeOccurance (frequencies (clojure.string/lower-case large)))
-  (def smallOccurance (frequencies (clojure.string/lower-case small)))
-  (def anagramFilter (map #(and (contains? largeOccurance (first %)) 
-  (<= (second %) (get largeOccurance (first %)))) smallOccurance ))
+  (def largeOccurance 
+  (frequencies (clojure.string/lower-case large)))
+  (def smallOccurance 
+  (frequencies (clojure.string/lower-case small)))
+  (def anagramFilter 
+  (map #(and (contains? largeOccurance (first %)) 
+  (<= (second %) 
+  (get largeOccurance (first %)))) smallOccurance ))
   (every? true? anagramFilter)
 )
 
@@ -24,7 +28,8 @@
    (with-open [fileReader 
    (clojure.java.io/reader file-name)]
    (def wordsList 
-   (reduce conj [] (line-seq fileReader))))
+   (reduce conj [] 
+   (line-seq fileReader))))
    (reverse (into () wordsList))
   )
   )
@@ -53,9 +58,10 @@
   ;; Code goes here
   (let [dictionaryWords 
   (load-dictionary)
-  withAnan (map #(find-sub-anagrams % dictionaryWords) words)]
+  anagramsList 
+  (map #(find-sub-anagrams % dictionaryWords) words)]
   (str/join "\n" 
-  (map #(str/join " " %) withAnan))
+  (map #(str/join " " %) anagramsList))
   )
 )
   
