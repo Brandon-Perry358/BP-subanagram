@@ -18,16 +18,16 @@
 
 (defn load-dictionary 
   "Load list of words from disk."
-  ([] (load-dictionaryList "resources/words"))
+  ([] (load-dictionary "resources/words"))
   ([file-name]
    ;; Code goes here
-   (with-open 
-   [read (clojure.java.io/reader file-name)]
-   (def words (reduce conj [] (line-seq read)))
-   )
-   (reverse (into () words))
-  ))
-  
+   (with-open [fileReader 
+   (clojure.java.io/reader file-name)]
+   (def wordsList 
+   (reduce conj [] (line-seq fileReader))))
+   (reverse (into () wordsList))
+  )
+  )
 
 (defn find-sub-anagrams 
   "Find all the words in word-list that are sub-anagrams of word.
@@ -35,8 +35,10 @@
   A sub-anagram means it is an anagram of a substring of word."
   [word, word-list]
   ;; Code goes here
-  (def findSubs (filter #(determineSubanagram word %)word-list)
+  (def findSubs 
+  (filter #(determineSubanagram word %) word-list)
   )
+  findSubs
 )  
 
 (defn generate-output 
@@ -49,10 +51,13 @@
   "
   [words]
   ;; Code goes here
-  (let [dictionary (load-dictionary)
-  anagram (map #(find-sub-anagrams) % dictionary) words]
-  (str/join "\n" (map #(str/join " " %) anagram)))
+  (let [dictionaryWords 
+  (load-dictionary)
+  withAnan (map #(find-sub-anagrams % dictionaryWords) words)]
+  (str/join "\n" 
+  (map #(str/join " " %) withAnan))
   )
+)
   
 
 (defn -main 
