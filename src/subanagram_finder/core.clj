@@ -16,7 +16,7 @@
   (every? true? anagramFilter)
 )
 
-(defn load-dictionaryList 
+(defn load-dictionary 
   "Load list of words from disk."
   ([] (load-dictionaryList "resources/words"))
   ([file-name]
@@ -49,8 +49,8 @@
   "
   [words]
   ;; Code goes here
-  (let [dictionaryList (load-dictionary)
-  anagram (map #(find-sub-anagrams) % dictionaryList) words]
+  (let [dictionary (load-dictionary)
+  anagram (map #(find-sub-anagrams) % dictionary) words]
   (str/join "\n" (map #(str/join " " %) anagram)))
   )
   
